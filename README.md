@@ -28,3 +28,27 @@ mkdocs serve
 
 View the site and live changes at https://localhost:8000.
 
+
+
+Seb C installation
+
+https://stackoverflow.com/questions/54133684/how-to-install-fly-cli-to-mac
+
+
+
+targets:
+  tutorial:
+    api: http://127.0.0.1:8080
+    team: main
+    token:
+      type: bearer
+
+      value: XXXXXXX
+
+
+from https://concoursetutorial.com/
+
+
+   
+
+       

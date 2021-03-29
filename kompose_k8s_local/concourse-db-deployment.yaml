@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file ../docker-compose.yml convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: concourse-db
+  name: concourse-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: concourse-db
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file ../docker-compose.yml convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: concourse-db
+    spec:
+      containers:
+        - env:
+            - name: PGDATA
+              value: /database
+            - name: POSTGRES_DB
+              value: concourse
+            - name: POSTGRES_PASSWORD
+              value: concourse_pass
+            - name: POSTGRES_USER
+              value: concourse_user
+          image: postgres
+          name: concourse-db
+          resources: {}
+      restartPolicy: Always
+status: {}

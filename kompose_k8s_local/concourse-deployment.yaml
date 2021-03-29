@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file ../docker-compose.yml convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: concourse
+  name: concourse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: concourse
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file ../docker-compose.yml convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: concourse
+    spec:
+      containers:
+        - args:
+            - quickstart
+          env:
+            - name: CONCOURSE_ADD_LOCAL_USER
+              value: admin:admin
+            - name: CONCOURSE_MAIN_TEAM_LOCAL_USER
+              value: admin
+            - name: CONCOURSE_POSTGRES_DATABASE
+              value: concourse
+            - name: CONCOURSE_POSTGRES_HOST
+              value: concourse-db
+            - name: CONCOURSE_POSTGRES_PASSWORD
+              value: concourse_pass
+            - name: CONCOURSE_POSTGRES_USER
+              value: concourse_user
+          image: concourse/concourse
+          name: concourse
+          ports:
+            - containerPort: 8080
+          resources: {
+            limits: 
+              memory:"128Mi"
+              cpu:"250m"
+            requests:
+              memory:"64Mi"
+              cpu:"250m"
+          }
+          securityContext:
+            privileged: true
+      restartPolicy: Always
+status: {}
